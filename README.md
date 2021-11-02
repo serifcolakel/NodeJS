@@ -1,5 +1,6 @@
 # NODE-JS NOTLARI
 * jshint app.js ile app.js içerisindeki javascript hatalarını gözlemleyebiliriz.
+### Moduller
 * Her değişken tanımlandığı .js sayfası içerisinde global olarak tanımlanmaz.Bu yüzden değişkenlere farklı yerlerden ulaşılması halinde modüller altında global değişken haline getirilip kullanılabilir.
 * Aşağıdaki kod parçacığı ile .js sayfası modül haline getirilebilir ve dışarıya aktarılabilir.
 
