@@ -54,3 +54,9 @@ module.exports.endPoint = url;
 	* npm i  ile package.json içeresinde önceden kurulan paketleri otomatik kurabilirsin.
 	* git init ile git’e hazır hale getirilir .gitignore ile de yüklenmemesini istediğimiz dosyaları gizleyebiliriz.
 	* Sürüm 4. 1.2 => anasürüm(major).Küçüksürüm(minor).yamaversiyonu(patch) şeklinde kodlanır.Hata bulunmazsa 4.0.0 olabilir.
+
+# **REST(Representational State Transfer) Full Services**
+  *  Verilerin güvenli bir kanalda değiş tokuş edilmesi için https kullan
+  *  https://vidly.com/api/customers bir end-point örneği 
+  *  
+  *  
