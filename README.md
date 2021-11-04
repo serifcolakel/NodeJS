@@ -69,7 +69,7 @@ module.exports.endPoint = url;
   // sorgu adında kurs varsa kursu gönderecek JSON formatında yoksa status ile 404 ve hata mesajı gönderecek
       const course = courses.find((c) => c.id === parseInt(req.params.id));
       if (!course)
-        res.status(404).send("The Course with the given ID was not found.");
+        return res.status(404).send("The Course with the given ID was not found.");
         res.send(course);
       });
     ```
@@ -92,8 +92,7 @@ app.post("/api/courses", (req, res) => {
   //YADA AŞAĞIDAKİ GİBİ KULLANILABİLİR
   const { error } = validateCourse(req.body); // result.error destruc.
   if (error) {
-    res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
-    return; // fonksiyonu sonladırdık
+    return res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
   }
 
   const course = {
@@ -104,8 +103,10 @@ app.post("/api/courses", (req, res) => {
   res.send(course); // yanıtı gövdeye dönderiyoruz.
 });
 ```
+
   *  **PUT(Update/Replace)** Veri eklemek/düzenlemek için
 ```javascript
+//Kaynakları güncellemek için put Kullanıyoruz.
 app.put("/api/courses/:id", (req, res) => {
   // (if) Kursa bakmamız lazım ve yoksa 404 döndermeliyiz
   const course = courses.find((c) => c.id === parseInt(req.params.id));
@@ -117,17 +118,34 @@ app.put("/api/courses/:id", (req, res) => {
   // const result = validateCourse(req.body);
   const { error } = validateCourse(req.body); // result.error destruc.
   if (error) {
-    res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
-    return; // fonksiyonu sonladırdık
+    return res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
   }
   // (else if) update course return the updated course
   course.name = req.body.name;
   res.send(course);
 });
-```
-  *  **DELETE(Delete)** 
-```javascript
 
+function validateCourse(course) {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  return Joi.validate(course, schema);
+}
+```
+  *  **DELETE(Delete)** Verileri Silmek için
+```javascript
+app.delete("/api/courses/:id", (req, res) => {
+  // (if) Kursa bakmamız lazım ve yoksa 404 döndermeliyiz
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) {
+    return res.status(404).send("The Course with the given ID was not found.");
+  }
+  // Silme işlemi
+  const index = courses.indexOf(course);
+  courses.splice(index, 1); //gelen course objesini siliyoruz
+  // return the same course
+  res.send(course);
+});
 ```
 
 # **EXPRESS**
