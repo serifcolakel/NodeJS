@@ -75,7 +75,26 @@ module.exports.endPoint = url;
     ```
   *  **POST(Create)** 
 ```javascript
-app.post("api/courses", (req, res) => {
+app.post("/api/courses", (req, res) => {
+  // const schema = {
+  //   name: Joi.string().min(3).required(),
+  // };
+  // const result = Joi.validate(req.body, schema);
+  // // console.log(result); //postmanda görünteleniyor
+  // // name yoksa veya boyutu 3'den az ise
+  // if (result.error) {
+  //   // Status: 400 Bad Request
+  //   res.status(400).send(result.error);
+  //   // res.status(400).send(result.error.details[0].message); //sadece mesaj gösterilecek
+  //   return; // fonksiyonu sonladırdık
+  // }
+  //YADA AŞAĞIDAKİ GİBİ KULLANILABİLİR
+  const { error } = validateCourse(req.body); // result.error destruc.
+  if (error) {
+    res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
+    return; // fonksiyonu sonladırdık
+  }
+
   const course = {
     id: courses.length + 1, // id sayısını veri sayısının 1 fazlası olarak ayarladık
     name: req.body.name, // isteğin body'sinde bulunan adı
@@ -85,8 +104,31 @@ app.post("api/courses", (req, res) => {
 });
 ```
   *  **PUT(Update/Replace)**
+```javascript
+//Kaynakları güncellemek için put Kullanıyoruz.
+app.put("/api/courses/:id", (req, res) => {
+  // (if) Kursa bakmamız lazım ve yoksa 404 döndermeliyiz
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) {
+    res.status(404).send("The Course with the given ID was not found.");
+  }
+
+  // (else if) doğrulama yapılmalı ve doğrulama geçersizse 400 döndermeliyiz.
+  // const result = validateCourse(req.body);
+  const { error } = validateCourse(req.body); // result.error destruc.
+  if (error) {
+    res.status(400).send(error.details[0].message); //sadece mesaj gösterilecek
+    return; // fonksiyonu sonladırdık
+  }
+  // (else if) update course return the updated course
+  course.name = req.body.name;
+  res.send(course);
+});
+```
   *  **DELETE(Delete)** 
-  *  **PATCH(Update/Modify)**
+```javascript
+
+```
 
 # **EXPRESS**
   *  **npm i express** ile kurulur.
@@ -95,3 +137,24 @@ app.post("api/courses", (req, res) => {
   *  **Power Shell'de: $env:PORT=5000**
   *  **Bash'te (Windows): export PORT=5000** ile PORT değeri 5000 olarak ayarlanır.
   * **http://localhost:3000/api/posts/2018/7?sortBy=name** sortBy ile sıralanabilir. 
+
+# **JOI**  https://www.npmjs.com/package/joi
+  * **npm i joi** ile joi indirilebilir.
+  * ilk olarak şema tanımlanır.
+  * Sonrasında ise gönderilecek elemana ait özellikler şemaya içerisinde joi kullanılarak belirtilir.
+```javascript
+app.post("/api/courses", (req, res) => {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  const result = Joi.validate(req.body, schema);
+  // console.log(result); //postmanda görünteleniyor
+  // name yoksa veya boyutu 3'den az ise
+  if (result.error) {
+    // Status: 400 Bad Reques
+    res.status(400).send(result.error);
+    // res.status(400).send(result.error.details[0].message); //sadece mesaj gösterilecek
+    return; // fonksiyonu sonladırdık
+  }
+});
+```
