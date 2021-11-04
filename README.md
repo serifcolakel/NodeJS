@@ -59,7 +59,7 @@ module.exports.endPoint = url;
   *  Verilerin güvenli bir kanalda değiş tokuş edilmesi için https kullan
   *  https://vidly.com/api/customers bir end-point örneği 
 ### **HTTP methods** 
-  * **GET(Read)**
+  * **GET(Read)** Verileri Getirmek için
     ```javascript
       app.get("/api/posts/:year/:month", (req, res) => {
         res.send(req.params); // request içerisinde gelen ay ve yıl verilerini yolladık
@@ -73,7 +73,8 @@ module.exports.endPoint = url;
         res.send(course);
       });
     ```
-  *  **POST(Create)** 
+
+  *  **POST(Create)**  Veri iletmek için
 ```javascript
 app.post("/api/courses", (req, res) => {
   // const schema = {
@@ -103,9 +104,8 @@ app.post("/api/courses", (req, res) => {
   res.send(course); // yanıtı gövdeye dönderiyoruz.
 });
 ```
-  *  **PUT(Update/Replace)**
+  *  **PUT(Update/Replace)** Veri eklemek/düzenlemek için
 ```javascript
-//Kaynakları güncellemek için put Kullanıyoruz.
 app.put("/api/courses/:id", (req, res) => {
   // (if) Kursa bakmamız lazım ve yoksa 404 döndermeliyiz
   const course = courses.find((c) => c.id === parseInt(req.params.id));
