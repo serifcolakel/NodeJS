@@ -4,6 +4,11 @@ const app = express();
 const logger = require("./logger");
 app.use(express.json()); //midlle func dönderir
 
+//Built-in Middleware (Yerleşik Ara Yazılım)
+app.use(express.urlencoded({ extended: true })); // req.body'i parse eder.
+app.use(express.static("public")); // public adlı dosyayı static dosya olarak ekledi
+// http://localhost:3000/readme.txt ile ulaşılabilir middleware ile halka açık değil
+
 app.use(function (req, res, next) {
   console.log("logging...");
   next(); //isteği sonlandırıyoruz.sonlandırmada denediğimizde yanıt alamıyoruz
