@@ -176,3 +176,31 @@ app.post("/api/courses", (req, res) => {
   }
 });
 ```
+
+# **Creating Custom Middleware Declare (Özel Ara Yazılım Oluşturma)**
+* logger.js dosyası içinde export edildi
+```javascript
+function log(req, res, next) {
+  console.log("Authenticating..");
+  // Geçmek için kimlik doğrulama vb adımı uygulanabilir.
+  next();
+}
+
+module.exports = log;
+```
+
+* index.js içerisinde kullanıldı 
+```javascript
+const logger = require("./logger"); // çağrıldı
+
+//Diğer bir örnek
+app.use(function (req, res, next) {
+  console.log("logging...");
+  next(); //isteği sonlandırıyoruz.sonlandırmada denediğimizde yanıt alamıyoruz
+  // Kısaca özetlersek istek burada sıkışıyor biz next ile bu işlem adımları
+  // gerçekleştirildikten sonra fonksiyonu sonlandırıyoruz.
+  // Geçmek için kimlik doğrulama vb adımı uygulanabilir.
+});
+
+app.use(logger); // kullanıldı
+```

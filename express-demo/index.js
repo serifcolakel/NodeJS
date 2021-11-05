@@ -1,7 +1,18 @@
 const Joi = require("joi");
 const express = require("express");
 const app = express();
-app.use(express.json());
+const logger = require("./logger");
+app.use(express.json()); //midlle func dönderir
+
+app.use(function (req, res, next) {
+  console.log("logging...");
+  next(); //isteği sonlandırıyoruz.sonlandırmada denediğimizde yanıt alamıyoruz
+  // Kısaca özetlersek istek burada sıkışıyor biz next ile bu işlem adımları
+  // gerçekleştirildikten sonra fonksiyonu sonlandırıyoruz.
+  // Geçmek için kimlik doğrulama vb adımı uygulanabilir.
+});
+
+app.use(logger); // creating custom middleware declare
 
 // HTTP methods https://expressjs.com/en/5x/api.html
 // app.get(url, callback func);
