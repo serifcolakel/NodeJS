@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const config = require("config");
 const express = require("express");
 const app = express();
 const logger = require("./logger");
@@ -9,12 +10,19 @@ app.use(helmet());
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
+// Configuration - Şifre vs gibi önemli bilgiler bu json dosyalarında saklanmaz
+//Eğer NODE_ENV=development ise development.json bilgileri gelecek
+console.log("Application Name : " + config.get("name"));
+console.log("Mail Server : " + config.get("mail.host"));
+console.log("Mail Password : " + config.get("mail.password")); // $env:app_password=666
+//Eğer NODE_ENV=production ise production.json bilgileri gelecek
+
 // Enviroments
 console.log(`NODE_DEV: ${process.env.NODE_DEV}`); // eğer burası tanımlanmadıysa
 // yada
 console.log(`app : ${app.get("env")}`); // burası development olarak kaydedilir.
 //Ayrıca sadece developmentte isteklerin günlüğe kaydedilmesi için
-//Projeyi durdur ctrl+c ile sonrasında set NODE_ENV=production
+//Projeyi durdur ctrl+c ile sonrasında  $env:NODE_ENV="production" sayı ise "" yok
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
   console.log("Morgan enabled..");
