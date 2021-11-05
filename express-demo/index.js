@@ -2,13 +2,19 @@ const Joi = require("joi");
 const express = require("express");
 const app = express();
 const logger = require("./logger");
-app.use(express.json()); //midlle func dönderir
+//helmet : Çeşitli HTTP üstbilgileri ayarlayarak uygulamalarınızın güvenliğini sağlamaya yardımcı olur.
+const helmet = require("helmet");
+app.use(helmet());
+//morgan : HTPP request logger(her isteği kaydeder.) default olarak console da gösterir ayrı bir dosyaya da kaydedilebilir.
+const morgan = require("morgan");
+app.use(morgan("tiny"));
 
+app.use(express.json()); //midlle func dönderir
 //Built-in Middleware (Yerleşik Ara Yazılım)
 app.use(express.urlencoded({ extended: true })); // req.body'i parse eder.
 app.use(express.static("public")); // public adlı dosyayı static dosya olarak ekledi
 // http://localhost:3000/readme.txt ile ulaşılabilir middleware ile halka açık değil
-
+// https://expressjs.com/en/resources/middleware.html
 app.use(function (req, res, next) {
   console.log("logging...");
   next(); //isteği sonlandırıyoruz.sonlandırmada denediğimizde yanıt alamıyoruz
@@ -16,7 +22,6 @@ app.use(function (req, res, next) {
   // gerçekleştirildikten sonra fonksiyonu sonlandırıyoruz.
   // Geçmek için kimlik doğrulama vb adımı uygulanabilir.
 });
-
 app.use(logger); // creating custom middleware declare
 
 // HTTP methods https://expressjs.com/en/5x/api.html
@@ -24,7 +29,6 @@ app.use(logger); // creating custom middleware declare
 // app.post(url, callback func);
 // app.put(url, callback func);
 // app.delete(url, callback func);
-
 // /api/courses/1 => 1=id'si kursun
 
 app.get("/", (req, res) => {
