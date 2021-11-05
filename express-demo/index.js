@@ -9,6 +9,17 @@ app.use(helmet());
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
+// Enviroments
+console.log(`NODE_DEV: ${process.env.NODE_DEV}`); // eğer burası tanımlanmadıysa
+// yada
+console.log(`app : ${app.get("env")}`); // burası development olarak kaydedilir.
+//Ayrıca sadece developmentte isteklerin günlüğe kaydedilmesi için
+//Projeyi durdur ctrl+c ile sonrasında set NODE_ENV=production
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Morgan enabled..");
+}
+
 app.use(express.json()); //midlle func dönderir
 //Built-in Middleware (Yerleşik Ara Yazılım)
 app.use(express.urlencoded({ extended: true })); // req.body'i parse eder.
