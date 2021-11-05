@@ -11,6 +11,7 @@ const morgan = require("morgan");
 app.use(morgan("tiny"));
 
 // Configuration - Şifre vs gibi önemli bilgiler bu json dosyalarında saklanmaz
+//https://www.npmjs.com/package/config
 //Eğer NODE_ENV=development ise development.json bilgileri gelecek
 console.log("Application Name : " + config.get("name"));
 console.log("Mail Server : " + config.get("mail.host"));
