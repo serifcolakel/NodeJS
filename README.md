@@ -206,7 +206,7 @@ app.use(logger); // kullanıldı
 ```
 
 # **Hata Ayıklama(Debugging)**
-
+>* **npm i debug**
 ```javascript
 const startupDebugger = require("debug")("app:startup");
 const dbDebugger = require("debug")("app:db");
@@ -225,3 +225,24 @@ dbDebugger("Contected to the database...");
 
 >![alt text](https://i.hizliresim.com/ddwhxfj.jpg)
 
+
+# **Templating Engines (Pug - Mustache - EJS )**
+>* npm i pug
+```javascript
+//Templating Engine
+app.set("view engine", "pug"); // pug modülünü import etti
+app.set("views", "./views"); // all template dosyası içerisinde
+```
+## **Index.pug dosyasının konumu**
+>![index.pug](https://i.hizliresim.com/r2a2ohn.jpg)
+
+```javascript
+//Templating Engines eklendi
+app.get("/", (req, res) => {
+  // ilk parametresi dosyadı adı(index.pug) ikincisi object index.pug da tanımlanan parametrelere göre eklenebilir
+  res.render("index", {
+    title: "My Express App",
+    message: "Hi I'm Beginner on NodeJS",
+  });
+});
+```

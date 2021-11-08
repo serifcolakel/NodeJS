@@ -12,6 +12,10 @@ app.use(helmet());
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
+//Templating Engine
+app.set("view engine", "pug"); // pug modülünü import etti
+app.set("views", "./views"); // all template dosyası içerisinde
+
 //Hata Ayıklama işlemi 2 türde yapılabilir şartlı yada
 if (app.get("env") === "development") {
   startupDebugger("Morgan Enabled...");
@@ -61,8 +65,13 @@ app.use(logger); // creating custom middleware declare
 // app.delete(url, callback func);
 // /api/courses/1 => 1=id'si kursun
 
+//Templating Engines eklendi
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  // ilk parametresi dosyadı adı(index.pug) ikincisi object index.pug da tanımlanan parametrelere göre
+  res.render("index", {
+    title: "My Express App",
+    message: "Hi I'm Beginner on NodeJS",
+  });
 });
 app.get("/api/courses/", (req, res) => {
   res.send(courses);
