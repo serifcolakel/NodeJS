@@ -156,7 +156,8 @@ app.delete("/api/courses/:id", (req, res) => {
   *  **Bash'te (Windows): export PORT=5000** ile PORT değeri 5000 olarak ayarlanır.
   * **http://localhost:3000/api/posts/2018/7?sortBy=name** sortBy ile sıralanabilir. 
 
-# **JOI**  https://www.npmjs.com/package/joi
+# **JOI**  
+  * **https://www.npmjs.com/package/joi**
   * **npm i joi** ile joi indirilebilir.
   * ilk olarak şema tanımlanır.
   * Sonrasında ise gönderilecek elemana ait özellikler şemaya içerisinde joi kullanılarak belirtilir.
