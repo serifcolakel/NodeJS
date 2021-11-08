@@ -1,3 +1,5 @@
+const startupDebugger = require("debug")("app:startup");
+const dbDebugger = require("debug")("app:db");
 const Joi = require("joi");
 const config = require("config");
 const express = require("express");
@@ -9,6 +11,14 @@ app.use(helmet());
 //morgan : HTPP request logger(her isteği kaydeder.) default olarak console da gösterir ayrı bir dosyaya da kaydedilebilir.
 const morgan = require("morgan");
 app.use(morgan("tiny"));
+
+//Hata Ayıklama işlemi 2 türde yapılabilir şartlı yada
+if (app.get("env") === "development") {
+  startupDebugger("Morgan Enabled...");
+}
+//şartsız olarak işlemleri gerçekleştirilir.
+dbDebugger("Contected to the database...");
+//$env:DEBUG="app:startup" ile startup tagı verilen debug çalışırken $env:DEBUG="app:*" ile de tüm hata ayıklama kodları ayrı ayır çalışır
 
 // Configuration - Şifre vs gibi önemli bilgiler bu json dosyalarında saklanmaz
 //https://www.npmjs.com/package/config

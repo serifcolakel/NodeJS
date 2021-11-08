@@ -204,3 +204,24 @@ app.use(function (req, res, next) {
 
 app.use(logger); // kullanıldı
 ```
+
+# **Hata Ayıklama(Debugging)**
+
+```javascript
+const startupDebugger = require("debug")("app:startup");
+const dbDebugger = require("debug")("app:db");
+
+//Hata Ayıklama işlemi 2 türde yapılabilir şartlı yada
+if (app.get("env") === "development") {
+  startupDebugger("Morgan Enabled...");
+}
+//şartsız olarak işlemleri gerçekleştirilir.
+dbDebugger("Contected to the database...");
+//$env:DEBUG="app:startup" ile startup tagı verilen debug çalışırken $env:DEBUG="app:*" ile de tüm hata ayıklama kodları ayrı ayır çalışır
+
+```
+* Genelde debug işlemi için console.log() kullanılır :smiley:
+* **Debugging Ekran Görüntüsü** 
+
+>![alt text](https://i.hizliresim.com/ddwhxfj.jpg)
+
