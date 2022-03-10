@@ -6,12 +6,22 @@ const courses = [
   { id: 1, name: "Course-1" },
   { id: 2, name: "Course-2" },
   { id: 3, name: "Course-3" },
-  { id: 4, name: "Course-4" },
+  { id: 4, name: "Course-45" },
 ];
-
+const key = [
+  "124124qwasdsad",
+  "qwşielkqwğpeığ1p2k3",
+  "şlqfmöğpocsvjpnb21",
+  "781274qwk0912kiwşlfkm",
+];
 // /api/courses
 router.get("/", (req, res) => {
-  res.send(courses);
+  //console.log("--1", req.headers);
+  if (key.includes(req.headers.key)) {
+    res.send(courses);
+  } else {
+    res.send("key not found");
+  }
 });
 
 // /api/courses

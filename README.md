@@ -1,11 +1,13 @@
 # NODE-JS NOTLARI
-* jshint app.js ile app.js içerisindeki javascript hatalarını gözlemleyebiliriz.
+
+- jshint app.js ile app.js içerisindeki javascript hatalarını gözlemleyebiliriz.
+
 ### Moduller
-* Her değişken tanımlandığı .js sayfası içerisinde global olarak tanımlanmaz.Bu yüzden değişkenlere farklı yerlerden ulaşılması halinde modüller altında global değişken haline getirilip kullanılabilir.
-* Aşağıdaki kod parçacığı ile .js sayfası modül haline getirilebilir ve dışarıya aktarılabilir.
+
+- Her değişken tanımlandığı .js sayfası içerisinde global olarak tanımlanmaz.Bu yüzden değişkenlere farklı yerlerden ulaşılması halinde modüller altında global değişken haline getirilip kullanılabilir.
+- Aşağıdaki kod parçacığı ile .js sayfası modül haline getirilebilir ve dışarıya aktarılabilir.
 
 ```javascript
-
 var url = "URL";
 
 function log(message) {
@@ -17,17 +19,15 @@ function log(message) {
 module.exports.log = log;
 //url endPoint olarak kullanılabilir.
 module.exports.endPoint = url;
-
 ```
 
-
-*	Dosya sistemi(fs), Her zaman asenkron olarak kullanılmalıdır. https://nodejs.org/dist/latest-v17.x/docs/api/fs.html  adresinden gerekli metodlar kullanılabilir.
-*	Events Modulü(https://nodejs.org/dist/latest-v17.x/docs/api/events.html , events) 
-* 	HTTP Modülü(https://nodejs.org/dist/latest-v17.x/docs/api/http.html ) Birden fazla veri eklemek için kod satırı fazla olacağından dolayı Express kullanılarak bu sorun ortadan kaldırılmış olur.
+- Dosya sistemi(fs), Her zaman asenkron olarak kullanılmalıdır. https://nodejs.org/dist/latest-v17.x/docs/api/fs.html adresinden gerekli metodlar kullanılabilir.
+- Events Modulü(https://nodejs.org/dist/latest-v17.x/docs/api/events.html , events)
+-     HTTP Modülü(https://nodejs.org/dist/latest-v17.x/docs/api/http.html ) Birden fazla veri eklemek için kod satırı fazla olacağından dolayı Express kullanılarak bu sorun ortadan kaldırılmış olur.
 
 ```javascript
  const http = require("http");
- 
+
  const server = http.createServer((req, res) = {
    //http://localhost:3000 adresine string olarak veri yazdı
   if (req.url === "/") {
@@ -47,34 +47,39 @@ module.exports.endPoint = url;
 
 ```
 
-*	**NPM** 
-	* package.json => npm init  yazıp tüm şartları kabul et ve package.json’ı oluştur
-	* Using a Package => npm i package ile kur ve doküman okuyarak import edebilirsin.
-	* https://underscorejs.org/ ile JS metod, fonks. Vs kullanılabilir.
-	* npm i  ile package.json içeresinde önceden kurulan paketleri otomatik kurabilirsin.
-	* git init ile git’e hazır hale getirilir .gitignore ile de yüklenmemesini istediğimiz dosyaları gizleyebiliriz.
-	* Sürüm 4. 1.2 => anasürüm(major).Küçüksürüm(minor).yamaversiyonu(patch) şeklinde kodlanır.Hata bulunmazsa 4.0.0 olabilir.
+- **NPM**
+  - package.json => npm init yazıp tüm şartları kabul et ve package.json’ı oluştur
+  - Using a Package => npm i package ile kur ve doküman okuyarak import edebilirsin.
+  - https://underscorejs.org/ ile JS metod, fonks. Vs kullanılabilir.
+  - npm i ile package.json içeresinde önceden kurulan paketleri otomatik kurabilirsin.
+  - git init ile git’e hazır hale getirilir .gitignore ile de yüklenmemesini istediğimiz dosyaları gizleyebiliriz.
+  - Sürüm 4. 1.2 => anasürüm(major).Küçüksürüm(minor).yamaversiyonu(patch) şeklinde kodlanır.Hata bulunmazsa 4.0.0 olabilir.
 
 # **REST(Representational State Transfer) Full Services**
-  *  Verilerin güvenli bir kanalda değiş tokuş edilmesi için https kullan
-  *  https://vidly.com/api/customers bir end-point örneği 
-### **HTTP methods** 
-  * **GET(Read)** Verileri Getirmek için
-    ```javascript
-      app.get("/api/posts/:year/:month", (req, res) => {
-        res.send(req.params); // request içerisinde gelen ay ve yıl verilerini yolladık
-        res.send(req.query); // query objeleri gösterildi
-      });
-      app.get("/api/courses/:id", (req, res) => {
-  // sorgu adında kurs varsa kursu gönderecek JSON formatında yoksa status ile 404 ve hata mesajı gönderecek
-      const course = courses.find((c) => c.id === parseInt(req.params.id));
-      if (!course)
-        return res.status(404).send("The Course with the given ID was not found.");
-        res.send(course);
-      });
-    ```
 
-  *  **POST(Create)**  Veri iletmek için
+- Verilerin güvenli bir kanalda değiş tokuş edilmesi için https kullan
+- https://vidly.com/api/customers bir end-point örneği
+
+### **HTTP methods**
+
+- **GET(Read)** Verileri Getirmek için
+
+```javascript
+app.get("/api/posts/:year/:month", (req, res) => {
+  res.send(req.params); // request içerisinde gelen ay ve yıl verilerini yolladık
+  res.send(req.query); // query objeleri gösterildi
+});
+app.get("/api/courses/:id", (req, res) => {
+  // sorgu adında kurs varsa kursu gönderecek JSON formatında yoksa status ile 404 ve hata mesajı gönderecek
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course)
+    return res.status(404).send("The Course with the given ID was not found.");
+  res.send(course);
+});
+```
+
+- **POST(Create)** Veri iletmek için
+
 ```javascript
 app.post("/api/courses", (req, res) => {
   // const schema = {
@@ -104,7 +109,8 @@ app.post("/api/courses", (req, res) => {
 });
 ```
 
-  *  **PUT(Update/Replace)** Veri eklemek/düzenlemek için
+- **PUT(Update/Replace)** Veri eklemek/düzenlemek için
+
 ```javascript
 //Kaynakları güncellemek için put Kullanıyoruz.
 app.put("/api/courses/:id", (req, res) => {
@@ -132,7 +138,9 @@ function validateCourse(course) {
   return Joi.validate(course, schema);
 }
 ```
-  *  **DELETE(Delete)** Verileri Silmek için
+
+- **DELETE(Delete)** Verileri Silmek için
+
 ```javascript
 app.delete("/api/courses/:id", (req, res) => {
   // (if) Kursa bakmamız lazım ve yoksa 404 döndermeliyiz
@@ -149,18 +157,21 @@ app.delete("/api/courses/:id", (req, res) => {
 ```
 
 # **EXPRESS**
-  *  **npm i express** ile kurulur.
-  *  **npm i -g nodemon** ile global olarak kullanılarak yenileyen modul import edilmiş olur
-  *  **In Command Prompt: set PORT=5000**
-  *  **Power Shell'de: $env:PORT=5000**
-  *  **Bash'te (Windows): export PORT=5000** ile PORT değeri 5000 olarak ayarlanır.
-  * **http://localhost:3000/api/posts/2018/7?sortBy=name** sortBy ile sıralanabilir. 
 
-# **JOI**  
-  * **https://www.npmjs.com/package/joi**
-  * **npm i joi** ile joi indirilebilir.
-  * ilk olarak şema tanımlanır.
-  * Sonrasında ise gönderilecek elemana ait özellikler şemaya içerisinde joi kullanılarak belirtilir.
+- **npm i express** ile kurulur.
+- **npm i -g nodemon** ile global olarak kullanılarak yenileyen modul import edilmiş olur
+- **In Command Prompt: set PORT=5000**
+- **Power Shell'de: $env:PORT=5000**
+- **Bash'te (Windows): export PORT=5000** ile PORT değeri 5000 olarak ayarlanır.
+- **http://localhost:3000/api/posts/2018/7?sortBy=name** sortBy ile sıralanabilir.
+
+# **JOI**
+
+- **https://www.npmjs.com/package/joi**
+- **npm i joi** ile joi indirilebilir.
+- ilk olarak şema tanımlanır.
+- Sonrasında ise gönderilecek elemana ait özellikler şemaya içerisinde joi kullanılarak belirtilir.
+
 ```javascript
 app.post("/api/courses", (req, res) => {
   const schema = {
@@ -179,7 +190,9 @@ app.post("/api/courses", (req, res) => {
 ```
 
 # **Creating Custom Middleware Declare (Özel Ara Yazılım Oluşturma)**
-* logger.js dosyası içinde export edildi
+
+- logger.js dosyası içinde export edildi
+
 ```javascript
 function log(req, res, next) {
   console.log("Authenticating..");
@@ -190,7 +203,8 @@ function log(req, res, next) {
 module.exports = log;
 ```
 
-* index.js içerisinde kullanıldı 
+- index.js içerisinde kullanıldı
+
 ```javascript
 const logger = require("./logger"); // çağrıldı
 
@@ -207,7 +221,9 @@ app.use(logger); // kullanıldı
 ```
 
 # **Hata Ayıklama(Debugging)**
->* **npm i debug**
+
+> - **npm i debug**
+
 ```javascript
 const startupDebugger = require("debug")("app:startup");
 const dbDebugger = require("debug")("app:db");
@@ -219,23 +235,26 @@ if (app.get("env") === "development") {
 //şartsız olarak işlemleri gerçekleştirilir.
 dbDebugger("Contected to the database...");
 //$env:DEBUG="app:startup" ile startup tagı verilen debug çalışırken $env:DEBUG="app:*" ile de tüm hata ayıklama kodları ayrı ayır çalışır
-
 ```
-* Genelde debug işlemi için console.log() kullanılır :smiley:
-* **Debugging Ekran Görüntüsü** 
 
->![alt text](https://i.hizliresim.com/ddwhxfj.jpg)
+- Genelde debug işlemi için console.log() kullanılır :smiley:
+- **Debugging Ekran Görüntüsü**
 
+> ![alt text](https://i.hizliresim.com/ddwhxfj.jpg)
 
 # **Templating Engines (Pug - Mustache - EJS )**
->* npm i pug
+
+> - npm i pug
+
 ```javascript
 //Templating Engine
 app.set("view engine", "pug"); // pug modülünü import etti
 app.set("views", "./views"); // all template dosyası içerisinde
 ```
+
 ## **Index.pug dosyasının konumu**
->![index.pug](https://i.hizliresim.com/r2a2ohn.jpg)
+
+> ![index.pug](https://i.hizliresim.com/r2a2ohn.jpg)
 
 ```javascript
 //Templating Engines eklendi

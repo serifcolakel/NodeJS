@@ -13,6 +13,7 @@ app.use(helmet());
 //morgan : HTPP request logger(her isteği kaydeder.) default olarak console da gösterir ayrı bir dosyaya da kaydedilebilir.
 const morgan = require("morgan");
 app.use(morgan("tiny"));
+// ilk argüman path, ikinci argüman yönlendirici adı
 app.use("/api/courses", courses);
 app.use("/", home);
 
