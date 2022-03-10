@@ -266,3 +266,77 @@ app.get("/", (req, res) => {
   });
 });
 ```
+
+## **The File System(Creating, Deleting, Reading files etc )**
+
+> - import data package on top level of index.js
+
+```javascript
+const fs = require("fs");
+```
+
+> - readFile ile dosya okunur, ilk parametre dosya yolu, ikinci parametre callback fonksiyonu
+
+```javascript
+//reading files
+fs.readFile("./readme.txt", "utf-8", (err, data) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(data.toString());
+  }
+});
+```
+
+> - writeFile ile dosya yazılır, ilk parametre dosya yolu, ikinci parametre dosya içeriği, üçüncü parametre callback fonksiyonu
+
+```javascript
+// writing files --> if file not exist it will create it\*
+fs.writeFile("./readme.txt", "Hello World", (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("File created");
+  }
+});
+```
+
+> - dosya oluşturmak için mkdir ile yapılır, ilk parametre yol, ikinci parametre option, üçüncü parametre callback fonksiyonu
+
+```javascript
+// directories --> take arg : (path, options, callback);
+// existsSync --> take arg : (path) --> true or false --> true if file or directory exists
+if (!fs.existsSync("./assets")) {
+  fs.mkdir("./assets", { recursive: true }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Directory created");
+    }
+  });
+} else {
+  // take arg : (path, options, callback) --> recursive : true -> if directory exist it will delete it
+  fs.rmdir("./assets", { recursive: true }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Directory deleted");
+    }
+  });
+}
+```
+
+> - unlink ile dosya silinir, ilk parametre dosya yolu, ikinci parametre callback fonksiyonu
+
+```javascript
+//delete files --> take arg : (path, options, callback)
+if (!fs.existsSync("./assets/readme.txt")) {
+  fs.unlink("./assets/readme.txt", (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("File deleted");
+    }
+  });
+}
+```
